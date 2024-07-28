@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form, Toggle, FlexboxGrid, Breadcrumb, Text, Input } from 'rsuite';
 import React, { useEffect, useState } from "react"
 import { useGeneralStore, useNavigationEditorStore } from '../../store';
@@ -7,6 +8,9 @@ const Textarea = React.forwardRef((props, ref) => <Input {...props} as="textarea
 export default function NavImportModal({
     open, handleClose
 }) {
+    const { t, i18n } = useTranslation();
+    const toolTranslation = t("tools", { returnObjects: true }).navigation.labels;
+
     const wikiname = useGeneralStore(state => state.wikiName);
     const wikilang = useGeneralStore(state => state.wikiLang);
     const addItem = useNavigationEditorStore(state => state.addItem);
@@ -86,7 +90,7 @@ export default function NavImportModal({
             size="md"
         >
             <Modal.Header>
-                <Modal.Title>Import</Modal.Title>
+                <Modal.Title>{ t("importLabel") }</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -97,12 +101,12 @@ export default function NavImportModal({
                     onSubmit={handleSubmit}
                 >
                     <div style={{ marginBottom: "1rem" }}>
-                    <Text muted as="span">Copy the source of the</Text>&nbsp;
-                    { wikiname.trim().length === 0 && <><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text>&nbsp;</> }
-                    { wikiname.trim().length > 0 && <><a style={{ textDecoration: "none" }} target="_blank"
+                    <Text muted as="span">{ toolTranslation.importMessage[0] }</Text>
+                    { wikiname.trim().length === 0 && <Text color="blue" as="b">MediaWiki:Wiki-navigation</Text> }
+                    { wikiname.trim().length > 0 && <a style={{ textDecoration: "none" }} target="_blank"
                         href={ `https://${wikiname}.fandom.com/${wikilang}/wiki/MediaWiki:Wiki-navigation?action=edit` }
-                    ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a>&nbsp;</> }
-                    <Text muted as="span">page of your wiki and paste in the field below.</Text>
+                    ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a> }
+                    <Text muted as="span">{ toolTranslation.importMessage[1] }</Text>
                     </div>
 
                     <Form.Group controlId="text">
@@ -115,11 +119,11 @@ export default function NavImportModal({
                 <Button
                     onClick={handleClose}
                     appearance="subtle"
-                >Cancel</Button>
+                >{ t("cancelLabel") }</Button>
                 <Button
                     onClick={handleSubmit}
                     appearance="primary"
-                >Import</Button>
+                >{ t("importLabel") }</Button>
             </Modal.Footer>
         </Modal>
     </>)

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from "react";
 import { Radio, RadioGroup, HStack, Button } from "rsuite";
 import NavMenuEditor from "../../components/navMenuEditor/NavMenuEditor";
@@ -8,6 +9,9 @@ import NavImportModal from "../../components/navImportModal/NavImportModal";
 const RadioLabel = ({ children }) => <label style={{ padding: 7 }}>{children}</label>;
 
 export default function NavigationEditorView() {
+    const { t, i18n } = useTranslation();
+    const toolTranslation = t("tools", { returnObjects: true }).navigation;
+
     const [view, setView] = useState("menu");
 
     // modals
@@ -26,12 +30,12 @@ export default function NavigationEditorView() {
                     value={view}
                     onChange={setView}
                 >
-                    <RadioLabel>View: </RadioLabel>
-                    <Radio value="menu">Dropdown menu</Radio>
-                    <Radio value="tree">Tree</Radio>
-                    <Radio value="code">Source</Radio>
+                    <RadioLabel>{ t("viewLabel") }</RadioLabel>
+                    <Radio value="menu">{ toolTranslation.views.dropdown }</Radio>
+                    <Radio value="tree">{ toolTranslation.views.tree }</Radio>
+                    <Radio value="code">{ toolTranslation.views.source }</Radio>
                 </RadioGroup>
-                <Button onClick={handleOpenImportModal}>Import</Button>
+                <Button onClick={handleOpenImportModal}>{ t("importLabel") }</Button>
             </HStack>
         </div>
 

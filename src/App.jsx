@@ -4,13 +4,13 @@ import Header from './components/header/Header'
 import NavigationEditorView from './views/navigationEditorView/NavigationEditorView';
 
 function App() {
-  const [active, setActive] = useState("Navigation");
+  const [active, setActive] = useState("navigation");
 
   return (
     <>
       <Header active={active} setActive={setActive} />
       <main>
-        { active === "Navigation" && <NavigationEditorView /> }
+        { active === "navigation" && <NavigationEditorView /> }
       </main>
     </>
   )

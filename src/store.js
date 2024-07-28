@@ -4,10 +4,6 @@ export const useGeneralStore = create((set, get) => ({
     wikiName: "",
     wikiDisplayName: "",
     wikiLang: "en",
-    namespacesList: ["(Main)", "Talk", "User", "User talk", "{{SITENAME}} Wiki", "{{SITENAME}} Wiki talk", "File", "File talk",
-        "MediaWiki", "MediaWiki talk", "Template", "Template talk", "Help", "Help talk",
-        "Category", "Category talk", "Forum", "Forum talk", "GeoJson", "GeoJson talk", "User blog",
-        "Blog", "Blog talk", "Module", "Module talk", "Message Wall", "Map", "Map talk"]
 }))
 
 export const useNavigationEditorStore = create((set, get) => ({

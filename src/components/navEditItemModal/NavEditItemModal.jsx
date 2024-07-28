@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form, Toggle, FlexboxGrid, Breadcrumb, Text } from 'rsuite';
 import { useEffect, useState } from "react"
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
@@ -7,12 +8,15 @@ import { useGeneralStore, useNavigationEditorStore } from '../../store';
 export default function NavEditItemModal({
     open, handleClose
 }) {
+    const { t, i18n } = useTranslation();
+    const toolTranslation = t("tools", { returnObjects: true }).navigation.labels;
+
     const addItem = useNavigationEditorStore(state => state.addItem);
     const getItem = useNavigationEditorStore(state => state.getItem);
     const editItem = useNavigationEditorStore(state => state.editItem);
     const selectedID = useNavigationEditorStore(state => state.selectedItemID);
     const path = useNavigationEditorStore(state => state.addItemPath);
-    const namespacesList = useGeneralStore(state => state.namespacesList);
+    const namespacesList = t("namespaces", { returnObjects: true });
     const wikiname = useGeneralStore(state => state.wikiDisplayName);
 
     const [formValue, setFormValue] = useState({
@@ -88,7 +92,7 @@ export default function NavEditItemModal({
             size="md"
         >
             <Modal.Header>
-                <Modal.Title>{ selectedID === null ? "New node" : "Edit node" }</Modal.Title>
+                <Modal.Title>{ selectedID === null ? toolTranslation.newNode : toolTranslation.editNode }</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -99,18 +103,18 @@ export default function NavEditItemModal({
                     onSubmit={handleSubmit}
                 >
                     <Form.Group controlId="title">
-                        <Form.ControlLabel>Name</Form.ControlLabel>
+                        <Form.ControlLabel>{ toolTranslation.name }</Form.ControlLabel>
                         <Form.Control autoFocus name="title" />
                     </Form.Group>
 
                     <Form.Group controlId="addLink">
-                        <Toggle id="addLink" onChange={setLinkStatus} checked={linkStatus} /> &nbsp; <Form.ControlLabel style={{ display: "inline-block" }}>Add link</Form.ControlLabel>
+                        <Toggle id="addLink" onChange={setLinkStatus} checked={linkStatus} /> &nbsp; <Form.ControlLabel style={{ display: "inline-block" }}>{ toolTranslation.addLink }</Form.ControlLabel>
                     </Form.Group>
 
                     {
                         linkStatus && <Form.Group controlId="link">
-                            <Form.ControlLabel>Link</Form.ControlLabel>
-                            <Form.Control name="link" type="text" placeholder="E.g. article name, Special:Random, MediaWiki:Wiki-navigation, etc." />
+                            <Form.ControlLabel>{ toolTranslation.link }</Form.ControlLabel>
+                            <Form.Control name="link" type="text" placeholder={ toolTranslation.addLinkPlaceholder } />
                             <div style={{ display: "flex", flexWrap: "wrap", gap: ".25rem", margin: "1rem 0" }}>
                                 { namespacesList.map((el, index) => <FlexboxGrid.Item key={index}><Button size="sm" onClick={() => handleLinkHint(el, index)}>{ wikiname.trim().length > 0 ? el.replaceAll("{{SITENAME}}", wikiname) : el }{ index > 0 ? " : " : "" }</Button></FlexboxGrid.Item>)  }
                             </div>
@@ -123,11 +127,11 @@ export default function NavEditItemModal({
                 <Button
                     onClick={handleClose}
                     appearance="subtle"
-                >Cancel</Button>
+                >{ t("cancelLabel") }</Button>
                 <Button
                     onClick={handleSubmit}
                     appearance={ handleValidation() ? "primary" : "ghost" }
-                >{ selectedID === null ? "Create" : "Save" }</Button>
+                >{ selectedID === null ? t("createLabel") : t("editLabel") }</Button>
             </Modal.Footer>
         </Modal>
     </>)

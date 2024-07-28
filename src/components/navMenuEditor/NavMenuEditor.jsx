@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Dropdown, ButtonToolbar, Button, Tooltip, Text } from 'rsuite';
 import PlusIcon from '@rsuite/icons/Plus';
 // import NewItemModal from '../newItemModal/NewItemModal';
@@ -10,6 +11,9 @@ import NavDeleteItemModal from '../navDeleteItemModal/NavDeleteItemModal';
 function ItemControls({
     item, path, canAddItems, handleOpenEditModal, handleOpenDeleteModal
 }) {
+    const { t, i18n } = useTranslation();
+    const toolTranslation = t("tools", { returnObjects: true }).navigation;
+
     const getChildren = useNavigationEditorStore(state => state.getChildren);
     const setPath = useNavigationEditorStore(state => state.setPath);
     const setSelectedID = useNavigationEditorStore(state => state.setSelectedID);
@@ -31,7 +35,7 @@ function ItemControls({
                 handleOpenEditModal();
                 setSelectedID(null);
             }}
-        >New node</Dropdown.Item>}
+        >{ toolTranslation.labels.newNode }</Dropdown.Item>}
 
         {/* Edit item */}
         { !item?.noedit && <Dropdown.Item
@@ -41,7 +45,7 @@ function ItemControls({
                 handleOpenEditModal();
                 setSelectedID(item.id);
             }}
-        >Edit</Dropdown.Item>}
+        >{ t("editLabel") }</Dropdown.Item>}
 
         {/* Delete item */}
         { !item?.noedit && <Dropdown.Item
@@ -50,12 +54,15 @@ function ItemControls({
                 setSelectedID(item.id);
                 handleOpenDeleteModal();
             }}
-        ><Text color="red">Delete</Text></Dropdown.Item>}
+        ><Text color="red">{ t("deleteLabel") }</Text></Dropdown.Item>}
     </>)
 
 }
 
 export default function NavMenuEditor() {
+    const { t, i18n } = useTranslation();
+    const toolTranslation = t("tools", { returnObjects: true }).navigation;
+    
     const items = useNavigationEditorStore(state => state.items);
     const exploreItems = useNavigationEditorStore(state => state.exploreItems);
     const getAllChildren = useNavigationEditorStore(state => state.getAllChildren);
@@ -113,7 +120,7 @@ export default function NavMenuEditor() {
                 handleOpenEditItemModal();
                 setPath([]);
                 setSelectedID(null);
-            }}>New node</Button>
+            }}>{ toolTranslation.labels.newNode }</Button>
         </ButtonToolbar>
 
         <NavEditItemModal
