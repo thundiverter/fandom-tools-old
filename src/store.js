@@ -1,5 +1,22 @@
 import { create } from "zustand";
 
+// LOCAL FUNCTIONS
+
+function itemToSourceRow(item, level) {
+    // levels: 0, 1, 2
+    if (item.link !== null) {
+        if (item.link.trim() === item.label.trim()) {
+            return { value: ["*", "**", "***"][level] + item.label, level };
+        } else {
+            return { value: ["*", "**", "***"][level] + item.link + "|" + item.label, level };
+        }
+    } else {
+        return { value: ["*#|", "**#|", "***#|"][level] + item.label, level };
+    }
+}
+
+// STORES
+
 export const useGeneralStore = create((set, get) => ({
     wikiName: "",
     wikiDisplayName: "",
@@ -34,9 +51,7 @@ export const useNavigationEditorStore = create((set, get) => ({
 
     // adds a new item. use 'null' for link and parent if you want to leave these fields empty
     addItem: (title, link, parent) => {
-        set(state => {
-            console.log(`${title} added (id: ${state.lastItemIndex}, parent: ${parent})`);
-            
+        set(state => {            
             const newItem = {
                 title, link, parent,
                 id: state.lastItemIndex,
@@ -80,8 +95,6 @@ export const useNavigationEditorStore = create((set, get) => ({
             ...state,
             items: state.items.filter(item => item.id !== id && item.parent !== id),
         }));
-        console.log(`Removed id=${id}`);
-        console.log(get().items)
     },
 
     // gets all children of an item by id
@@ -113,7 +126,6 @@ export const useNavigationEditorStore = create((set, get) => ({
 
     // returns items as a tree
     getAllAsTree: () => {
-        // const allItems = [...get().exploreItems, ...get().items];
         const allItems = get().items;
         const flatArray = allItems.map(el => ({
             id: el.id,
@@ -145,4 +157,20 @@ export const useNavigationEditorStore = create((set, get) => ({
 
         return result;
     },
+
+    treeToSource: () => {
+        let result = [];
+        get().getAllAsTree().forEach(item => {
+            result.push(itemToSourceRow(item, 0));
+            if (item?.children) {
+                item.children.forEach(child => { result.push(itemToSourceRow(child, 1))
+                    if (child?.children) {
+                        child.children.forEach(gchild => { result.push(itemToSourceRow(gchild, 2)) })
+                    }
+                })
+            }
+        })
+
+        return result;
+    }
 }))

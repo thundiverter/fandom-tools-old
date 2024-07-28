@@ -27,7 +27,6 @@ export default function NavEditItemModal({
 
     useEffect(() => {
         if (open === true) {
-            console.log(path)
             if (selectedID === null) {
                 setFormValue({
                     title: "",

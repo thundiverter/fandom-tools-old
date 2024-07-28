@@ -40,40 +40,34 @@ export default function NavImportModal({
                 addItem( line.split("|").slice(1).join("|").trim(), null, null );
                 lastRoot = lastIndex;
                 lastIndex = lastIndex + 1;
-                console.log("1-no");
             } else
             // level 2 - no link
             if (line.startsWith("**#|") || line.startsWith("** #|")) {
                 addItem( line.split("|").slice(1).join("|").trim(), null, lastRoot );
                 lastChild = lastIndex;
                 lastIndex = lastIndex + 1;
-                console.log("2-no");
             } else 
             // level 3 - no link
             if (line.startsWith("***#|") || line.startsWith("*** #|")) {
                 addItem( line.split("|").slice(1).join("|").trim(), null, lastChild );
                 lastIndex = lastIndex + 1;
-                console.log("3-no");
             } else
             // level 1 - with link
             if (/^[*]{1}[^*]/.test(line)) {
                 addItem( line.slice(1).split("|").at(-1).trim(), line.slice(1).split("|").at(0).trim(), null );
                 lastRoot = lastIndex;
                 lastIndex = lastIndex + 1;
-                console.log("1-yes");
             } else
             // level 2 - with link
             if (/^[*]{2}[^*]/.test(line)) {
                 addItem( line.slice(2).split("|").at(-1).trim(), line.slice(2).split("|").at(0).trim(), lastRoot );
                 lastChild = lastIndex;
                 lastIndex = lastIndex + 1;
-                console.log("2-yes");
             } else 
             // level 3 - with link
             if (/^[*]{3}[^*]/.test(line)) {
                 addItem( line.slice(3).split("|").at(-1).trim(), line.slice(3).split("|").at(0).trim(), lastChild );
                 lastIndex = lastIndex + 1;
-                console.log("3-yes");
             };
         }
     }
