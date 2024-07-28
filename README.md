@@ -1,8 +1,15 @@
-# React + Vite
+# FANDOM Tools
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A set of various visual editors and consturctors for FANDOM wikis.
 
-Currently, two official plugins are available:
+[**Open FANDOM Tools »**](https://fandomtools.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## List of tools
+
+* **Navigation Visual Editor**
+
+  A visual editor for navigation menu for your wiki. Make one from scratch (or import), get source code, copy it and then paste to the ``MediaWiki:Wiki-navigation`` page of your wiki.
+
+<br>
+
+More tools will be added in the future.

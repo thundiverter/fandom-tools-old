@@ -13,7 +13,6 @@ function App() {
       <main>
         { active === "Navigation" && <NavigationEditorView /> }
       </main>
-      <Footer />
     </>
   )
 }
