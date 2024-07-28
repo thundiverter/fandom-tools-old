@@ -8,11 +8,6 @@ export default function SettingsDrawer({ view, open, handleClose }) {
     const appLanguage = useGeneralStore(state => state.appLang);
     const setAppLanguage = useGeneralStore(state => state.setAppLang);
 
-    function handleChangeLanguage(lang) {
-        setAppLanguage(lang);
-        handleChangeLanguage(lang);
-    }
-
     return (<Drawer open={open} onClose={handleClose} size="xs">
         <Drawer.Header>
             <Drawer.Title>{ t("settingsLabel") }</Drawer.Title>
