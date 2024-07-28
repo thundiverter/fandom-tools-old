@@ -58,6 +58,13 @@ const resources = {
             "deleteLabel": "Delete",
             "saveLabel": "Сохранить",
             "settingsLabel": "Settings",
+            "settings": {
+                "appLanguage": "Language",
+            },
+            "languages": [
+                { value: "en", label: "English" },
+                { value: "ru", label: "Russian (Русский)" },
+            ]
         }
     },
     ru: {
@@ -109,6 +116,13 @@ const resources = {
             "deleteLabel": "Удалить",
             "saveLabel": "Сохранить",
             "settingsLabel": "Настройки",
+            "settings": {
+                "appLanguage": "Язык",
+            },
+            "languages": [
+                { value: "en", label: "Английский (English)" },
+                { value: "ru", label: "Русский" },
+            ]
         }
     }
 }
@@ -117,7 +131,7 @@ i18n
 .use(initReactI18next)
 .init({
     resources,
-    lng: "ru",
+    lng: "en",
     interpolation: {
         escapeValue: false
     }
