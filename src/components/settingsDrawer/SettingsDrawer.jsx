@@ -67,12 +67,3 @@ export default function SettingsDrawer({ view, open, handleClose }) {
         </Drawer.Body>
     </Drawer>)
 }
-
-/*
-"sectionWiki": "Wiki",
-"wikiName": "Wiki address",
-"wikiNameHelp": "<address>.fandom.com",
-"wikiDisplayName": "Wiki name",
-"wikiDisplayNameHelp": "Usually ends with \"Wiki\"",
-"wikiLang": "Wiki language",
-*/

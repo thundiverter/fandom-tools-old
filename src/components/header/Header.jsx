@@ -25,8 +25,6 @@ export default function Header({ active, setActive }) {
             <Navbar appearance="none">
                 <Nav appearance="subtle" activeKey={active} onSelect={setActive}>
                     <Nav.Item eventKey="navigation">{ toolsTranslation.navigation.title } &nbsp; <Badge color="violet" content={ t("newLabel") } /></Nav.Item>
-                    {/* <Nav.Item eventKey="News">Advanced Infobox Builder</Nav.Item>
-                    <Nav.Item eventKey="Navbox">Navbox Builder</Nav.Item> */}
                 </Nav>
                 <Nav pullRight>
                     

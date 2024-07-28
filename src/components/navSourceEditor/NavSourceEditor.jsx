@@ -25,10 +25,6 @@ export default function NavSoruceEditor() {
             <Text muted as="span">{ toolTranslation.sourceMessage[1] }</Text>
         </div>
 
-        {/* <div style={{ marginBottom: "1rem" }}>
-            <Button>Copy</Button>
-        </div> */}
-
         <Panel bordered>
             {
                 sourceRows && sourceRows.map((item, index) => <React.Fragment key={index}>

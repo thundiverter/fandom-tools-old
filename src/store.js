@@ -36,7 +36,6 @@ export const useGeneralStore = create((set, get) => ({
             wikiLang: data.wikiLang !== undefined ? data.wikiLang : get().wikiLang,
             appLang: data.appLang !== undefined ? data.appLang : get().appLang,
         };
-        console.log(newData);
         set(state => ({ ...state, ...newData }));
         localStorage.setItem("fandomtools", JSON.stringify(newData));
     }
