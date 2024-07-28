@@ -3,7 +3,7 @@ import { Drawer, ButtonToolbar, Button, Placeholder, Text } from 'rsuite';
 const navboxInfo = {
     title: "Navbox Visual Editor",
     description: [
-        { text: "A visual editor for navigation menu for your wiki. Make one from scratch (or import), get source code, copy it and then paste to the " },
+        { text: "A visual editor for navigation menu for your wiki. Make one from scratch (or import an existing one), get source code, copy it and then paste to the " },
         { text: "MediaWiki:Wiki-navigation", color: "blue", bold: true },
         { text: " page of your wiki." },
     ]

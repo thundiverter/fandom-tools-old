@@ -8,7 +8,7 @@ A set of various visual editors and consturctors for FANDOM wikis.
 
 * **Navigation Visual Editor**
 
-  A visual editor for navigation menu for your wiki. Make one from scratch (or import), get source code, copy it and then paste to the ``MediaWiki:Wiki-navigation`` page of your wiki.
+  A visual editor for navigation menu for your wiki. Make one from scratch (or import an existing one), get source code, copy it and then paste to the ``MediaWiki:Wiki-navigation`` page of your wiki.
 
 <br>
 
