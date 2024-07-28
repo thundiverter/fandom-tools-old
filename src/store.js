@@ -4,6 +4,14 @@ export const useGeneralStore = create((set, get) => ({
     wikiName: "",
     wikiDisplayName: "",
     wikiLang: "en",
+    appLang: "en",
+    setAppLang: (lang) => {
+        set(state => ({
+            ...state,
+            appLang: lang
+        }));
+        localStorage.setItem("fandomtools", JSON.stringify(get()));
+    },
 }))
 
 export const useNavigationEditorStore = create((set, get) => ({
