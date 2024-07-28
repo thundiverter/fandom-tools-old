@@ -29,6 +29,17 @@ export const useGeneralStore = create((set, get) => ({
         }));
         localStorage.setItem("fandomtools", JSON.stringify(get()));
     },
+    updateData: (data) => {
+        const newData = {
+            wikiName: data.name !== undefined ? data.name : get().wikiName,
+            wikiDisplayName: data.displayName !== undefined ? data.displayName : get().wikiDisplayName,
+            wikiLang: data.wikiLang !== undefined ? data.wikiLang : get().wikiLang,
+            appLang: data.appLang !== undefined ? data.appLang : get().appLang,
+        };
+        console.log(newData);
+        set(state => ({ ...state, ...newData }));
+        localStorage.setItem("fandomtools", JSON.stringify(newData));
+    }
 }))
 
 export const useNavigationEditorStore = create((set, get) => ({

@@ -46,8 +46,3 @@ p.source-child {
 p.source-gchild {
   padding-left: 2rem;
 }
-
-.rs-badge-content, .rs-badge-independent {
-  padding: 2px 8px !important;
-  border-radius: 99px !important;
-}

@@ -61,12 +61,21 @@ const resources = {
             "saveLabel": "Сохранить",
             "settingsLabel": "Settings",
             "settings": {
+                "sectionApp": "Website",
                 "appLanguage": "Language",
+                "appLanguageHelp": "The language used by the website",
+                "sectionWiki": "Wiki",
+                "wikiName": "Wiki address",
+                "wikiNameHelp": ".fandom.com",
+                "wikiNameHelpEmpty": "<address>",
+                "wikiDisplayName": "Wiki name",
+                "wikiDisplayNameHelp": "For example, Minecraft Wiki",
+                "wikiLang": "Wiki language",
             },
             "languages": [
                 { value: "en", label: "English" },
                 { value: "ru", label: "Russian (Русский)" },
-            ]
+            ],
         }
     },
     ru: {
@@ -121,7 +130,16 @@ const resources = {
             "saveLabel": "Сохранить",
             "settingsLabel": "Настройки",
             "settings": {
+                "sectionApp": "Сайт",
                 "appLanguage": "Язык",
+                "appLanguageHelp": "Язык, который используется на сайте",
+                "sectionWiki": "Вики",
+                "wikiName": "Адрес вики",
+                "wikiNameHelp": ".fandom.com",
+                "wikiNameHelpEmpty": "<адрес>",
+                "wikiDisplayName": "Название вики",
+                "wikiDisplayNameHelp": "Например, Minecraft Вики",
+                "wikiLang": "Язык вики",
             },
             "languages": [
                 { value: "en", label: "Английский (English)" },

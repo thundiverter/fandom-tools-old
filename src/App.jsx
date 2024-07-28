@@ -9,11 +9,15 @@ function App() {
   const [active, setActive] = useState("navigation");
 
   const appLanguage = useGeneralStore(state => state.appLang);
-  const setAppLanguage = useGeneralStore(state => state.setAppLang);
-  const lsAppData = localStorage?.getItem("fandomtools") ? JSON.parse(localStorage.getItem("fandomtools")) : {
-    appLang: "en"
+  const updateData = useGeneralStore(state => state.updateData);
+  const lsAppData = JSON.parse(localStorage.getItem("fandomtools"));
+  const appData = {
+    appLang: lsAppData.appLang || "en",
+    name: lsAppData.wikiName || "",
+    displayName: lsAppData.wikiDisplayName || "",
+    wikiLang: lsAppData.wikiLang || "en",
   };
-  setAppLanguage(lsAppData.appLang);
+  updateData(appData);
   
 
   useEffect(() => {
