@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Modal, Button, Form, Toggle, FlexboxGrid, Breadcrumb, Text, Input } from 'rsuite';
+import { Modal, Button, Form, Toggle, FlexboxGrid, Breadcrumb, Text, Input, Divider, HStack, SelectPicker, Tabs, Navbar, Nav, Badge } from 'rsuite';
 import React, { useEffect, useState } from "react"
 import { useGeneralStore, useNavigationEditorStore } from '../../store';
 
@@ -13,12 +13,16 @@ export default function NavImportModal({
 
     const wikiname = useGeneralStore(state => state.wikiName);
     const wikilang = useGeneralStore(state => state.wikiLang);
+    const wikiLanguages = useGeneralStore(state => state.wikiLanguages);
     const addItem = useNavigationEditorStore(state => state.addItem);
     const lastItemIndex = useNavigationEditorStore(state => state.lastItemIndex);
 
+    const [tab, setTab] = useState(1);
     const [formValue, setFormValue] = useState({
         text: ""
     });
+    const [importWikiAddress, setImportWikiAddress] = useState("");
+    const [importWikiLang, setImportWikiLang] = useState("en");
 
     useEffect(() => {
         if (open === true) {
@@ -29,12 +33,12 @@ export default function NavImportModal({
         }
     }, [open]);
 
-    function handleAddItems() {
+    function handleAddItems(items) {
         let lastRoot = null;
         let lastChild = null;
         let lastIndex = lastItemIndex;
 
-        for (let line of formValue.text.split("\n")) {
+        for (let line of items) {
             // level 1 - no link
             if (line.startsWith("*#|") || line.startsWith("* #|")) {
                 addItem( line.split("|").slice(1).join("|").trim(), null, null );
@@ -72,9 +76,23 @@ export default function NavImportModal({
         }
     }
 
-    function handleSubmit(e) {
-        handleAddItems();
-        handleClose();
+    async function handleSubmit(e) {
+        if (tab === "1") {
+            handleAddItems(formValue.text.split("\n"));
+            handleClose();
+        } else {
+            fetch(`https://${importWikiAddress}.fandom.com/${importWikiLang !== "en" ? importWikiLang + "/" : ""}api.php?action=query&titles=MediaWiki:Wiki-navigation&gaplimit=5&prop=revisions&rvprop=content&format=json`, {
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                // handleAddItems(data.split("\n"));
+            })
+            .then(() => {
+                handleClose();
+            })
+        }
     }
 
     return (<>
@@ -88,25 +106,45 @@ export default function NavImportModal({
             </Modal.Header>
 
             <Modal.Body>
-                <Form
-                    fluid
-                    formValue={formValue}
-                    onChange={setFormValue}
-                    onSubmit={handleSubmit}
-                >
-                    <div style={{ marginBottom: "1rem" }}>
-                    <Text muted as="span">{ toolTranslation.importMessage[0] }</Text>
-                    { wikiname.trim().length === 0 && <Text color="blue" as="b">MediaWiki:Wiki-navigation</Text> }
-                    { wikiname.trim().length > 0 && <a style={{ textDecoration: "none" }} target="_blank"
-                        href={ `https://${wikiname}.fandom.com/${wikilang}/wiki/MediaWiki:Wiki-navigation?action=edit` }
-                    ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a> }
-                    <Text muted as="span">{ toolTranslation.importMessage[1] }</Text>
-                    </div>
+                <Tabs defaultActiveKey="1" appearance="pills" defaultValue={tab} onSelect={setTab}>
+                    <Tabs.Tab eventKey="1" title="Paste">
+                        <Form
+                            fluid
+                            formValue={formValue}
+                            onChange={setFormValue}
+                            onSubmit={handleSubmit}
+                        >
+                            <div style={{ marginBottom: "1rem" }}>
+                            <Text muted as="span">{ toolTranslation.importMessage[0] }</Text>
+                            { wikiname.trim().length === 0 && <Text color="blue" as="b">MediaWiki:Wiki-navigation</Text> }
+                            { wikiname.trim().length > 0 && <a style={{ textDecoration: "none" }} target="_blank"
+                                href={ `https://${wikiname}.fandom.com/${wikilang}/wiki/MediaWiki:Wiki-navigation?action=edit` }
+                            ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a> }
+                            <Text muted as="span">{ toolTranslation.importMessage[1] }</Text>
+                            </div>
 
-                    <Form.Group controlId="text">
-                        <Form.Control autoFocus name="text" rows={10} accepter={Textarea} />
-                    </Form.Group>
-                </Form>
+                            <Form.Group controlId="text">
+                                <Form.Control autoFocus name="text" rows={5} accepter={Textarea} style={{ resize: "none" }} />
+                            </Form.Group>
+                        </Form>
+                    </Tabs.Tab>
+                    <Tabs.Tab eventKey="2" title="Wiki URL">
+                    <Text muted>Try to import navigation from existing wiki.</Text>
+                        <Form fluid layout="inline" style={{ marginTop: "1rem" }}>
+                            <HStack>
+                                <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder="E.g. community, minecraft, etc." />.fandom.com/<SelectPicker
+                                value={ importWikiLang }
+                                data={ wikiLanguages.map(el => ({ ...el, label: el.value + " — " + el.label })) }
+                                cleanable={false}
+                                onChange={ setImportWikiLang }
+                                placement="auto"
+                                renderValue={(value, items) => <span>{ value }</span>}
+                            />
+                            </HStack>
+                        </Form>
+                    </Tabs.Tab>
+                </Tabs>
+
             </Modal.Body>
 
             <Modal.Footer>

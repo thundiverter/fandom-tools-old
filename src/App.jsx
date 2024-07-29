@@ -12,10 +12,10 @@ function App() {
   const updateData = useGeneralStore(state => state.updateData);
   const lsAppData = JSON.parse(localStorage.getItem("fandomtools"));
   const appData = {
-    appLang: lsAppData.appLang || "en",
-    name: lsAppData.wikiName || "",
-    displayName: lsAppData.wikiDisplayName || "",
-    wikiLang: lsAppData.wikiLang || "en",
+    appLang: lsAppData?.appLang || "en",
+    name: lsAppData?.wikiName || "",
+    displayName: lsAppData?.wikiDisplayName || "",
+    wikiLang: lsAppData?.wikiLang || "en",
   };
   updateData(appData);
   
