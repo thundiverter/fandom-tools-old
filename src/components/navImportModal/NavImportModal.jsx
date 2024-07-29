@@ -17,9 +17,12 @@ export default function NavImportModal({
     const addItem = useNavigationEditorStore(state => state.addItem);
     const lastItemIndex = useNavigationEditorStore(state => state.lastItemIndex);
 
+    const [tab, setTab] = useState(1);
     const [formValue, setFormValue] = useState({
         text: ""
     });
+    const [importWikiAddress, setImportWikiAddress] = useState("");
+    const [importWikiLang, setImportWikiLang] = useState("en");
 
     useEffect(() => {
         if (open === true) {
@@ -74,8 +77,27 @@ export default function NavImportModal({
     }
 
     async function handleSubmit(e) {
-        handleAddItems(formValue.text.split("\n"));
-        handleClose();
+        if (tab === "1") {
+            handleAddItems(formValue.text.split("\n"));
+            handleClose();
+        } else {
+            fetch(`https://cors-anywhere.herokuapp.com/${importWikiAddress}.fandom.com/${importWikiLang !== "en" ? importWikiLang + "/" : ""}api.php?action=query&origin=*&titles=MediaWiki:Wiki-navigation&gaplimit=5&prop=revisions&rvprop=content&format=json`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const pages = data.query.pages;
+                const pageID = Object.keys(pages)[0];
+                const raw = pages[pageID].revisions[0]["*"];
+                handleAddItems(raw.split("\n"));
+            })
+            .then(() => {
+                handleClose();
+            })
+        }
     }
 
     return (<>
@@ -89,25 +111,44 @@ export default function NavImportModal({
             </Modal.Header>
 
             <Modal.Body>
-                <Form
-                    fluid
-                    formValue={formValue}
-                    onChange={setFormValue}
-                    onSubmit={handleSubmit}
-                >
-                    <div style={{ marginBottom: "1rem" }}>
-                    <Text muted as="span">{ toolTranslation.importMessage[0] }</Text>
-                    { wikiname.trim().length === 0 && <Text color="blue" as="b">MediaWiki:Wiki-navigation</Text> }
-                    { wikiname.trim().length > 0 && <a style={{ textDecoration: "none" }} target="_blank"
-                        href={ `https://${wikiname}.fandom.com/${wikilang}/wiki/MediaWiki:Wiki-navigation?action=edit` }
-                    ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a> }
-                    <Text muted as="span">{ toolTranslation.importMessage[1] }</Text>
-                    </div>
-                    
-                    <Form.Group controlId="text">
-                        <Form.Control autoFocus name="text" rows={5} accepter={Textarea} style={{ resize: "none" }} />
-                    </Form.Group>
-                </Form>
+                <Tabs defaultActiveKey="1" appearance="pills" defaultValue={tab} onSelect={setTab}>
+                    <Tabs.Tab eventKey="1" title="Paste">
+                        <Form
+                            fluid
+                            formValue={formValue}
+                            onChange={setFormValue}
+                            onSubmit={handleSubmit}
+                        >
+                            <div style={{ marginBottom: "1rem" }}>
+                            <Text muted as="span">{ toolTranslation.importMessage[0] }</Text>
+                            { wikiname.trim().length === 0 && <Text color="blue" as="b">MediaWiki:Wiki-navigation</Text> }
+                            { wikiname.trim().length > 0 && <a style={{ textDecoration: "none" }} target="_blank"
+                                href={ `https://${wikiname}.fandom.com/${wikilang}/wiki/MediaWiki:Wiki-navigation?action=edit` }
+                            ><Text color="blue" as="b">MediaWiki:Wiki-navigation</Text></a> }
+                            <Text muted as="span">{ toolTranslation.importMessage[1] }</Text>
+                            </div>
+
+                            <Form.Group controlId="text">
+                                <Form.Control autoFocus name="text" rows={5} accepter={Textarea} style={{ resize: "none" }} />
+                            </Form.Group>
+                        </Form>
+                    </Tabs.Tab>
+                    <Tabs.Tab eventKey="2" title="Wiki URL">
+                    <Text muted>Try to import navigation from existing wiki.</Text>
+                        <Form fluid layout="inline" style={{ marginTop: "1rem" }}>
+                            <HStack>
+                                <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder="E.g. community, minecraft, etc." />.fandom.com/<SelectPicker
+                                value={ importWikiLang }
+                                data={ wikiLanguages.map(el => ({ ...el, label: el.value + " — " + el.label })) }
+                                cleanable={false}
+                                onChange={ setImportWikiLang }
+                                placement="auto"
+                                renderValue={(value, items) => <span>{ value }</span>}
+                            />
+                            </HStack>
+                        </Form>
+                    </Tabs.Tab>
+                </Tabs>
 
             </Modal.Body>
 
