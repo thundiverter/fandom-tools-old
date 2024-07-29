@@ -20,13 +20,13 @@ export default function AboutDrawer({ view, open, handleClose }) {
             { toolTranslation.description.map((el, index) => <Text key={index} as={el.bold ? "b" : "span"} color={el.color || "white"}>{ el.text }</Text>) }
             
             <div style={{ marginTop: "1rem" }}>
-                <Text as="a" size="sm" color="blue" href="https://github.com/thundiverter/fandom-tools/issues" target="_blank">{ t("githubIssuesLink") }</Text>
+                <Text as="a" size="sm" color="cyan" href="https://github.com/thundiverter/fandom-tools/issues" target="_blank">{ t("githubIssuesLink") }</Text>
             </div>
 
             <Divider />
 
             <Text muted size="sm">
-                { t("madeByText") } <a href={ toolTranslation.authorURL } target="_blank">{ toolTranslation.author }</a>
+                { t("madeByText") } <Text as="a" size="sm" color="cyan" href={ toolTranslation.authorURL } target="_blank">{ toolTranslation.author }</Text>
             </Text>
         </Drawer.Body>
     </Drawer>)
