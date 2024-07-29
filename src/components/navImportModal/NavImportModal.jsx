@@ -140,6 +140,13 @@ export default function NavImportModal({
                     </Tabs.Tab>
                     <Tabs.Tab eventKey="2" title={ toolTranslation.importTabURL }>
                     <Text muted>{ toolTranslation.importURLMessage }</Text>
+                    <Text muted style={{ marginTop: "1rem" }}>
+                        { toolTranslation.importURLNote[0] }
+                        <Text as="a" style={{ fontWeight: "bold" }} target="_blank" color="cyan" href="https://cors-anywhere.herokuapp.com/corsdemo">{ toolTranslation.importURLNote[1] }</Text>
+                        { toolTranslation.importURLNote[2] }
+                        <Text as="a" style={{ fontWeight: "bold" }} target="_blank" color="cyan" href="https://cors-anywhere.herokuapp.com/corsdemo">{ toolTranslation.importURLNote[3] }</Text>
+                        { toolTranslation.importURLNote[4] }
+                    </Text>
                         <Form fluid layout="inline" style={{ marginTop: "1rem" }}>
                             <HStack>
                                 <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder={ toolTranslation.importURLWikinamePlaceholder } />.fandom.com/<SelectPicker

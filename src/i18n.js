@@ -49,6 +49,7 @@ const resources = {
                         "importURLMessage": "Try to import navigation from existing wiki.",
                         "importURLError": "An error has occured",
                         "importURLWikinamePlaceholder": "E.g. community, minecraft, etc.",
+                        "importURLNote": ["NOTICE: We use ", "cors-everywhere", " in order to make GET requests to FANDOM API. You might need to press the ", "\"Request temporary access to the demo server\" button here", " first."]
                     },
                     "copiedMessage": "Source code was copied to the clipboard",
                 },
@@ -124,6 +125,7 @@ const resources = {
                         "importURLMessage": "Попробовать импортировать навигацию с существующей вики.",
                         "importURLError": "Произошла ошибка",
                         "importURLWikinamePlaceholder": "Например, community, minecraft и т. д.",
+                        "importURLNote": ["ЗАМЕЧАНИЕ: Мы используем ", "cors-everywhere", ", чтобы осуществлять GET запросы к FANDOM API. Вам может понадобиться первым делом нажать на ", "кнопку \"Request temporary access to the demo server\" здесь", "."]
                     },
                     "copiedMessage": "Исходный код скопирован в буфер обмена",
                 },
