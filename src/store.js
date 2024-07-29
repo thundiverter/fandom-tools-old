@@ -62,13 +62,6 @@ export const useGeneralStore = create((set, get) => ({
         { value: "ja", label: "日本語" },
         { value: "ko", label: "한국어" },
     ],
-    setAppLang: (lang) => {
-        set(state => ({
-            ...state,
-            appLang: lang
-        }));
-        localStorage.setItem("fandomtools", JSON.stringify(get()));
-    },
     updateData: (data) => {
         const newData = {
             wikiName: data.name !== undefined ? data.name : get().wikiName,
