@@ -142,7 +142,7 @@ export default function NavImportModal({
                     <Text muted>{ toolTranslation.importURLMessage }</Text>
                         <Form fluid layout="inline" style={{ marginTop: "1rem" }}>
                             <HStack>
-                                <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder="E.g. community, minecraft, etc." />.fandom.com/<SelectPicker
+                                <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder={ toolTranslation.importURLWikinamePlaceholder } />.fandom.com/<SelectPicker
                                 value={ importWikiLang }
                                 data={ wikiLanguages.map(el => ({ ...el, label: el.value + " — " + el.label })) }
                                 cleanable={false}
