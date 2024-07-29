@@ -29,7 +29,8 @@ export default function NavImportModal({
             setFormValue({
                 ...formValue,
                 text: "",
-            })
+            });
+            setImportWikiAddress("");
         }
     }, [open]);
 
@@ -76,11 +77,14 @@ export default function NavImportModal({
         }
     }
 
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+
     async function handleSubmit(e) {
+        setShowErrorMessage(false);
         if (tab === "1") {
             handleAddItems(formValue.text.split("\n"));
             handleClose();
-        } else {
+        } else if (tab === "2" && importWikiAddress.trim().length > 0) {
             fetch(`https://cors-anywhere.herokuapp.com/${importWikiAddress}.fandom.com/${importWikiLang !== "en" ? importWikiLang + "/" : ""}api.php?action=query&origin=*&titles=MediaWiki:Wiki-navigation&gaplimit=5&prop=revisions&rvprop=content&format=json`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -97,6 +101,7 @@ export default function NavImportModal({
             .then(() => {
                 handleClose();
             })
+            .catch(err => setShowErrorMessage(true));
         }
     }
 
@@ -112,7 +117,7 @@ export default function NavImportModal({
 
             <Modal.Body>
                 <Tabs defaultActiveKey="1" appearance="pills" defaultValue={tab} onSelect={setTab}>
-                    <Tabs.Tab eventKey="1" title="Paste">
+                    <Tabs.Tab eventKey="1" title={ toolTranslation.importTabPaste }>
                         <Form
                             fluid
                             formValue={formValue}
@@ -133,8 +138,8 @@ export default function NavImportModal({
                             </Form.Group>
                         </Form>
                     </Tabs.Tab>
-                    <Tabs.Tab eventKey="2" title="Wiki URL">
-                    <Text muted>Try to import navigation from existing wiki.</Text>
+                    <Tabs.Tab eventKey="2" title={ toolTranslation.importTabURL }>
+                    <Text muted>{ toolTranslation.importURLMessage }</Text>
                         <Form fluid layout="inline" style={{ marginTop: "1rem" }}>
                             <HStack>
                                 <Form.Control value={importWikiAddress} onChange={setImportWikiAddress} placeholder="E.g. community, minecraft, etc." />.fandom.com/<SelectPicker
@@ -146,6 +151,7 @@ export default function NavImportModal({
                                 renderValue={(value, items) => <span>{ value }</span>}
                             />
                             </HStack>
+                            { showErrorMessage && <Text color="red">{ toolTranslation.importURLError }</Text> }
                         </Form>
                     </Tabs.Tab>
                 </Tabs>
@@ -159,7 +165,7 @@ export default function NavImportModal({
                 >{ t("cancelLabel") }</Button>
                 <Button
                     onClick={handleSubmit}
-                    appearance="primary"
+                    appearance={ (tab === "1" || (tab === "2" && importWikiAddress.trim().length > 0)) ? "primary" : "ghost"}
                 >{ t("importLabel") }</Button>
             </Modal.Footer>
         </Modal>
