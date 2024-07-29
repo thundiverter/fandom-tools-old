@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Drawer, ButtonToolbar, Button, Placeholder, Text } from 'rsuite';
+import { Drawer, ButtonToolbar, Button, Placeholder, Text, Divider } from 'rsuite';
 
 export default function AboutDrawer({ view, open, handleClose }) {
     const { t, i18n } = useTranslation();
@@ -18,7 +18,13 @@ export default function AboutDrawer({ view, open, handleClose }) {
         </Drawer.Header>
         <Drawer.Body>
             { toolTranslation.description.map((el, index) => <Text key={index} as={el.bold ? "b" : "span"} color={el.color || "white"}>{ el.text }</Text>) }
-            <hr />
+            
+            <div style={{ marginTop: "1rem" }}>
+                <Text as="a" size="sm" color="blue" href="https://github.com/thundiverter/fandom-tools/issues" target="_blank">{ t("githubIssuesLink") }</Text>
+            </div>
+
+            <Divider />
+
             <Text muted size="sm">
                 { t("madeByText") } <a href={ toolTranslation.authorURL } target="_blank">{ toolTranslation.author }</a>
             </Text>

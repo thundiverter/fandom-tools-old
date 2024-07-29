@@ -81,6 +81,7 @@ const resources = {
                 { value: "en", label: "English" },
                 { value: "ru", label: "Russian (Русский)" },
             ],
+            "githubIssuesLink": "Found an error?",
         }
     },
     ru: {
@@ -154,7 +155,8 @@ const resources = {
             "languages": [
                 { value: "en", label: "Английский (English)" },
                 { value: "ru", label: "Русский" },
-            ]
+            ],
+            "githubIssuesLink": "Нашли ошибку?",
         }
     }
 }
