@@ -19,7 +19,7 @@ const resources = {
                 "Blog", "Blog talk", "Module", "Module talk", "Message Wall", "Map", "Map talk", "Special"],
             "tools": {
                 "navigation": {
-                    title: "Navbox Visual Editor",
+                    title: "Navigation Visual Editor",
                     description: [
                         { text: "A visual editor for navigation menu for your wiki. Make one from scratch (or import an existing one), get source code, copy it and then paste to the " },
                         { text: "MediaWiki:Wiki-navigation", color: "blue", bold: true },
