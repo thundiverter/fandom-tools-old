@@ -1,4 +1,4 @@
-> This project is in a process of being rewritten.
+> This project is in a process of being rewritten. The new version will be available [here](https://github.com/thundiverter/fandom-tools).
 
 # FANDOM Tools
 
