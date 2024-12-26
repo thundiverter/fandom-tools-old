@@ -1,3 +1,5 @@
+> This project is in a process of being rewritten.
+
 # FANDOM Tools
 
 A set of various visual editors and consturctors for FANDOM wikis.
